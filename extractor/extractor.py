@@ -40,12 +40,12 @@ def extract_data(html: str) -> pd.DataFrame:
     df.dropna(axis=0, how='all', inplace=True)
     df.dropna(axis=1, how='all', inplace=True)
 
-    columns=['date', 'day_of_week', 'start_time', 'end_time', 'number_of_hours', 'subject', 'form_of_class', 'group', 'room', 'lecturer', 'form_of_passing', 'mode_of_studies', 'comments']
+    columns=['Start Date', 'Day Of Week', 'Start Time', 'End Time', 'Number Of Hours', 'Subject', 'Form Of Class', 'Group', 'Location', 'Lecturer', 'Form Of Passing', 'Mode Of Studies', 'Comments']
     df.columns = columns
 
     return df
 
 def extract_data_to_csv(html: str, filename: str) -> None:
     data = extract_data(html) 
-    data.to_csv(f'data/{filename}.csv', index=False)
+    data.to_csv(f'data/extracted/{filename}.csv', index=False)
     
