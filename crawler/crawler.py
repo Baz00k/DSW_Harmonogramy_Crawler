@@ -7,11 +7,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 class Crawler:
-    def __init__(self):
+    def __init__(self, headless: bool = True):
         self.service = ChromeService(ChromeDriverManager().install())
         # open chrome in headless mode
         options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
+        if headless:
+            options.add_argument('--headless')
         options.add_argument('--lang=pl-PL')
         self.driver = webdriver.Chrome(service=self.service, options=options)
         
