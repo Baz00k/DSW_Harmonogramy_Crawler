@@ -28,5 +28,5 @@ def extract_data(html):
 
 def extract_data_to_csv(html, filename):
     data = extract_data(html) 
-    data.to_csv(f'{filename}.csv', index=False, header=False)
+    data.to_csv(f'data/{filename}.csv', index=False, header=False)
     

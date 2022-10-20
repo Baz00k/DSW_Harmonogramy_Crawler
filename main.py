@@ -1,5 +1,5 @@
-from crawler import Crawler
-import extractor
+from crawler.crawler import Crawler
+import data_extractor.extractor as extractor
 
 def main():
     groupID = 8931

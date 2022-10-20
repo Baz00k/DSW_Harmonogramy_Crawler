@@ -4,27 +4,25 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
-# crawler class
 
 
 class Crawler:
-    # initialize the crawler
     def __init__(self):
         self.service = ChromeService(ChromeDriverManager().install())
         # open chrome in headless mode
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
+        options.add_argument('--lang=pl-PL')
         self.driver = webdriver.Chrome(service=self.service, options=options)
         
-    # close the driver
     def __del__(self):
+        # close the driver
         self.driver.close()
         
     def load_page(self, url):
         self.driver.get(url)
         return
 
-    # get the page source
     def get_page_source(self):
         return self.driver.page_source
 
