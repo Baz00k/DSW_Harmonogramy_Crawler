@@ -16,10 +16,9 @@ def extract_data(html: str) -> pd.DataFrame:
         if row.get("class") == ["dxgvGroupRow_Aqua"]:
             date = row.text.strip()
             # remove text before the date
-            date = date.partition(":")[2]
+            date = date.partition(":")[2].strip()
             # separate day of week from date
-            day_of_the_week = date[12:]
-            date = date[:11]
+            date, day_of_the_week = date.split()
             continue
 
         cols: list[str | float] = [ele.text.strip() for ele in row.find_all("td")]
@@ -53,7 +52,7 @@ def extract_data(html: str) -> pd.DataFrame:
         "Form Of Passing",
         "Mode Of Studies",
         "Comments",
-    ]
+    ]  # type: ignore
 
     return df
 
