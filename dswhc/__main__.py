@@ -6,6 +6,9 @@ import json
 from typing import Any
 
 
+URL = "https://harmonogramy.dsw.edu.pl/Plany/PlanyGrup/{id}"
+
+
 def load_cfg(file: str) -> dict[str, Any]:
     with open(file) as f:
         return json.load(f)
@@ -18,10 +21,9 @@ def main():
     dsw_crawler = Crawler(headless=cfg["headless"])
     group_range = range(8931, 8932)
 
-    for group_id in group_range:
-        website_url = f"https://harmonogramy.dsw.edu.pl/Plany/PlanyGrup/{group_id}"
+    for group_id in range(gr[0], gr[1] + 1):
         try:
-            dsw_crawler.load_page(website_url)
+            dsw_crawler.load_page(URL.format(id=group_id))
             dsw_crawler.load_table_data()
             html = dsw_crawler.page_source
             # cache data
