@@ -11,15 +11,16 @@ URL = "https://harmonogramy.dsw.edu.pl/Plany/PlanyGrup/{id}"
 
 def load_cfg(file: str) -> dict[str, Any]:
     with open(file) as f:
-        return json.load(f)
+        return load(f)
 
 
-def main():
+
+
+
     cfg = load_cfg("config.json")
-    headless = cfg["headless"]
-    group_range = cfg["group_range"]
-    dsw_crawler = Crawler(headless=cfg["headless"])
-    group_range = range(8931, 8932)
+    gr = cfg.pop("group_range")
+    
+    dsw_crawler = Crawler(**cfg)
 
     for group_id in range(gr[0], gr[1] + 1):
         try:
