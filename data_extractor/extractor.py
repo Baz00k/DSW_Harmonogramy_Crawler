@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
 
-def extract_data(html):
+def extract_data(html: str) -> pd.DataFrame:
     soup = BeautifulSoup(html, 'html.parser')
     table = soup.select_one("table#gridViewPlanyGrup_DXMainTable")
     rows = table.find_all('tr')
@@ -26,7 +26,7 @@ def extract_data(html):
 
     return df
 
-def extract_data_to_csv(html, filename):
+def extract_data_to_csv(html: str, filename: str) -> None:
     data = extract_data(html) 
     data.to_csv(f'data/{filename}.csv', index=False, header=False)
     

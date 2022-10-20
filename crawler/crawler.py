@@ -19,15 +19,15 @@ class Crawler:
         # close the driver
         self.driver.close()
         
-    def load_page(self, url):
+    def load_page(self, url: str) -> None:
         self.driver.get(url)
         return
 
-    def get_page_source(self):
+    def get_page_source(self) -> str:
         return self.driver.page_source
 
     # load all table data
-    def load_table_data(self):
+    def load_table_data(self) -> None:
         # button to select all data
         all_semester_button = self.driver.find_element(
             by=By.ID, value="RadioList_Termin3")
