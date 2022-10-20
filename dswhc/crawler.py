@@ -16,7 +16,6 @@ class Crawler:
         self.driver = webdriver.Chrome(service=self.service, options=options)
 
     def close(self) -> None:
-        # close the driver
         self.driver.close()
 
     def load_page(self, url: str) -> None:
@@ -26,7 +25,6 @@ class Crawler:
     def page_source(self) -> str:
         return self.driver.page_source
 
-    # load all table data
     def load_table_data(self) -> None:
         # button to select all data
         all_semester_button = self.driver.find_element(
