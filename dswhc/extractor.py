@@ -5,9 +5,9 @@ import pandas as pd
 def extract_data(html: str) -> pd.DataFrame:
     soup = BeautifulSoup(html, "html.parser")
     table = soup.select_one("table#gridViewPlanyGrup_DXMainTable")
-    assert table is not None
+    assert table is not None  # so that the typechecker doesn't complain
     rows = table.find_all("tr")
-    data = []
+    data: list[list[str | float]] = []
     date: str = ""
     day_of_the_week: str = ""
 
@@ -22,7 +22,7 @@ def extract_data(html: str) -> pd.DataFrame:
             date = date[:11]
             continue
 
-        cols = [ele.text.strip() for ele in row.find_all("td")]
+        cols: list[str | float] = [ele.text.strip() for ele in row.find_all("td")]
         # add date and day of week to the row
         cols = [date, day_of_the_week, *cols]
         # change empty strings to NaN
