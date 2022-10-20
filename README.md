@@ -6,7 +6,7 @@ Generator eventów Google Calendar z wykorzystaniem danych z harmonogramów DSW
 
 ## Instalacja
 
-Wymagany Python 3.10+
+Wymagany Python 3.10+ i zainstalowany Chrome.
 
 ```bash
 pip install -r requirements.txt
