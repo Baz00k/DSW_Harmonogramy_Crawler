@@ -35,6 +35,8 @@ def main():
             print(f"Error while processing group {group_id}: {e}")
             print("Skipping...")
 
+    dsw_crawler.close()
+
 
 if __name__ == "__main__":
     main()

@@ -15,7 +15,7 @@ class Crawler:
         options.add_argument("--lang=pl-PL")
         self.driver = webdriver.Chrome(service=self.service, options=options)
 
-    def __del__(self):
+    def close(self) -> None:
         # close the driver
         self.driver.close()
 
