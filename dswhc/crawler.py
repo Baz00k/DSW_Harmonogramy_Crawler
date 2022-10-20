@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 class Crawler:
-    def __init__(self, *, headless: bool = True):
+    def __init__(self, *, headless: bool = True) -> None:
         self.service = ChromeService(ChromeDriverManager().install())
         # open chrome in headless mode
         options = webdriver.ChromeOptions()
