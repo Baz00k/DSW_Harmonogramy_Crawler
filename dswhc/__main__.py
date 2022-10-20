@@ -2,8 +2,10 @@ from .crawler import Crawler
 from .extractor import extract_data_to_csv
 from .calendar_converter import convert_to_google_calendar_csv
 
-import json
+from json import load
 from typing import Any
+from contextlib import suppress
+from os import mkdir
 
 
 URL = "https://harmonogramy.dsw.edu.pl/Plany/PlanyGrup/{id}"
@@ -14,8 +16,14 @@ def load_cfg(file: str) -> dict[str, Any]:
         return load(f)
 
 
+def prepare_folders() -> None:
+    for dir in ("calendar", "extracted"):
+        with suppress(FileExistsError):
+            mkdir(dir)
 
 
+def main() -> None:
+    prepare_folders()
 
     cfg = load_cfg("config.json")
     gr = cfg.pop("group_range")
