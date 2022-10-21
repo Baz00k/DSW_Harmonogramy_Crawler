@@ -31,11 +31,12 @@ def main() -> None:
     prepare_folders()
 
     cfg = load_cfg("config.json")
-    gr = cfg.pop("group_range")
+    headless = cfg["headless"]
+    group_range = cfg["group_range"]
     
-    dsw_crawler = Crawler(**cfg)
+    dsw_crawler = Crawler(headless=headless)
 
-    for group_id in range(gr[0], gr[1] + 1):
+    for group_id in range(group_range[0], group_range[1] + 1):
         try:
             dsw_crawler.load_page(URL.format(id=group_id))
             dsw_crawler.load_table_data()
