@@ -9,9 +9,7 @@ def convert_to_google_calendar_csv(input_file: str, output_file: str) -> None:
     df["Subject"] = df["Form Of Class"] + ": " + df["Subject"]
 
     # create description of the event
-    df["Description"] = "Wykładowca: {}\nKomentarze: {}\nCzas trwania: {}".format(
-        df["Lecturer"], df["Comments"], df["Number Of Hours"]
-    )
+    df['Description'] = 'Wykładowca: ' + df['Lecturer'] + '\n' + 'Komentarze: ' + df['Comments'] + '\n' + 'Czas trwania: ' + df['Number Of Hours']
 
     # if there is no location, set it to online
     df["Location"] = df["Location"].fillna("Zdalnie")
