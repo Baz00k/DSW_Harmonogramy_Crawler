@@ -1,18 +1,17 @@
+from contextlib import suppress
+from json import load
+from os import mkdir
+from typing import Any
+
+from .calendar_converter import convert_to_google_calendar_csv
 from .crawler import Crawler
 from .extractor import extract_data_to_csv
-from .calendar_converter import convert_to_google_calendar_csv
-
-from json import load
-from typing import Any
-from contextlib import suppress
-from os import mkdir
-
 
 URL = "https://harmonogramy.dsw.edu.pl/Plany/PlanyGrup/{id}"
 
 
 def load_cfg(file: str) -> dict[str, Any]:
-    try :
+    try:
         with open(file, "r") as f:
             return load(f)
     except FileNotFoundError:
@@ -33,7 +32,7 @@ def main() -> None:
     cfg = load_cfg("config.json")
     headless = cfg["headless"]
     group_range = cfg["group_range"]
-    
+
     dsw_crawler = Crawler(headless=headless)
 
     for group_id in range(group_range[0], group_range[1] + 1):

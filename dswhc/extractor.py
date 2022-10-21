@@ -1,5 +1,5 @@
-from bs4 import BeautifulSoup
 import pandas as pd
+from bs4 import BeautifulSoup
 
 
 def extract_data(html: str) -> pd.DataFrame:
