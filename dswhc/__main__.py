@@ -12,8 +12,12 @@ URL = "https://harmonogramy.dsw.edu.pl/Plany/PlanyGrup/{id}"
 
 
 def load_cfg(file: str) -> dict[str, Any]:
-    with open(file) as f:
-        return load(f)
+    try :
+        with open(file, "r") as f:
+            return load(f)
+    except FileNotFoundError:
+        print(f"Config file {file} not found!")
+        exit(1)
 
 
 def prepare_folders() -> None:
