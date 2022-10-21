@@ -15,8 +15,7 @@ def load_cfg(file: str) -> dict[str, Any]:
         with open(file, "r") as f:
             return load(f)
     except FileNotFoundError:
-        print(f"Config file {file} not found!")
-        exit(1)
+        exit(f"Config file {file} not found!")
 
 
 def prepare_folders() -> None:
