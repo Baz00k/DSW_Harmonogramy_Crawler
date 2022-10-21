@@ -21,9 +21,10 @@ def load_cfg(file: str) -> dict[str, Any]:
 
 
 def prepare_folders() -> None:
-    for dir in ("calendar", "extracted"):
+    # check if folders exist and create them if they don't
+    for folder in ["data", "data/extracted", "data/calendar"]:
         with suppress(FileExistsError):
-            mkdir(dir)
+            mkdir(folder)
 
 
 def main() -> None:
