@@ -1,0 +1,12 @@
+{
+   "groupIDs": [1234],
+   "headless": true,
+   "refresh": true,
+   "email": "your.email@example.com",
+   "export": {
+      "google": {
+         "csv": false,
+         "calendar": false
+      }
+   }
+}
