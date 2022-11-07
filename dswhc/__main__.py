@@ -3,10 +3,9 @@ from json import load
 from os import mkdir
 from typing import Any
 
-import google_calendar
-
+from . import google_calendar
 from .crawler import Crawler
-from .extractor import extract_data_to_csv
+from .extractor import extract_data
 
 URL = "https://harmonogramy.dsw.edu.pl/Plany/PlanyGrup/{id}"
 
@@ -21,33 +20,36 @@ def load_cfg(file: str) -> dict[str, Any]:
 
 def prepare_folders() -> None:
     # check if folders exist and create them if they don't
-    for folder in ["data", "data/extracted", "data/calendar"]:
+    for folder in ["data", "data/extracted", "data/google_calendar"]:
         with suppress(FileExistsError):
             mkdir(folder)
 
 
 def main() -> None:
+    cfg = load_cfg("config.json")
+
     prepare_folders()
 
-    cfg = load_cfg("config.json")
-    headless = cfg["headless"]
-    group_range = cfg["group_range"]
+    dsw_crawler = Crawler(headless=cfg["headless"])
 
-    dsw_crawler = Crawler(headless=headless)
-
-    for group_id in range(group_range[0], group_range[1] + 1):
+    for group_id in cfg["groupIDs"]:
         try:
             dsw_crawler.load_page(URL.format(id=group_id))
             dsw_crawler.load_table_data()
             html = dsw_crawler.page_source
 
-            # cache data
-            extract_data_to_csv(html, f"group_{group_id}")
+            #  get raw data from html
+            raw_data = extract_data(html)
 
-            google_calendar.convert_to_csv(
-                input_file_path=f"data/extracted/group_{group_id}.csv",
-                output_file_path=f"calendar_group_{group_id}.csv",
-            )
+            # cache data
+            raw_data.to_csv(f"data/extracted/group_{group_id}.csv", index=False)
+
+            gcal = google_calendar.convert_to_gcal(raw_data)
+
+            if cfg["export"]["google"]["csv"]:
+                gcal.to_csv(
+                    f"data/google_calendar/calendar_group_{group_id}.csv", index=False
+                )
 
         except Exception as e:
             print(f"Error while processing group {group_id}: {e}")

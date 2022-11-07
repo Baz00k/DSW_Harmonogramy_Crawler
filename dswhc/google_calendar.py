@@ -1,43 +1,48 @@
 import pandas as pd
 
 
-def convert_to_csv(input_file_path: str, output_file_path: str) -> None:
-    # load data from csv file
-    df = pd.read_csv(input_file_path)
-
-    # create title of the event from form of class and subject
-    df["Subject"] = df["Form Of Class"] + ": " + df["Subject"]
-
-    # create description of the event
-    df["Description"] = (
-        "Wykładowca: "
-        + df["Lecturer"]
-        + "\n"
-        + "Komentarze: "
-        + df["Comments"]
-        + "\n"
-        + "Czas trwania: "
-        + df["Number Of Hours"]
-    )
-
-    # if there is no location, set it to online
-    df["Location"] = df["Location"].fillna("Zdalnie")
-
-    # convert to google calendar format by dropping unnecessary columns and renaming the rest
-    df = df.drop(
+def convert_to_gcal(raw_data: pd.DataFrame) -> pd.DataFrame:
+    gcal = pd.DataFrame(
         columns=[
-            "Day Of Week",
-            "Number Of Hours",
-            "Form Of Class",
-            "Group",
-            "Lecturer",
-            "Form Of Passing",
-            "Mode Of Studies",
-            "Comments",
+            "Subject",
+            "Description",
+            "Location",
+            "Start Date",
+            "Start Time",
+            "End Time",
+            "All Day Event",
+            "Private",
         ]
     )
-    df["Private"] = "True"
-    df["All Day Event"] = "False"
 
-    # save to csv file
-    df.to_csv(f"data/calendar/{output_file_path}", index=False)
+    # create title of the event from form of class and subject
+    gcal["Subject"] = raw_data["Form Of Class"] + ": " + raw_data["Subject"]
+
+    # create description of the event
+    gcal["Description"] = (
+        "Wykładowca: "
+        + raw_data["Lecturer"]
+        + "\n"
+        + "Komentarze: "
+        + raw_data["Comments"]
+        + "\n"
+        + "Ilość godzin lekcyjnych: "
+        + raw_data["Number Of Hours"]
+    )
+
+    gcal["Start Date"] = raw_data["Start Date"]
+    gcal["Start Time"] = raw_data["Start Time"]
+    gcal["End Time"] = raw_data["End Time"]
+
+    # if there is no location, set it to online
+    gcal["Location"] = raw_data["Location"].fillna("Zdalnie")
+
+    # Add event metadata
+    gcal["All Day Event"] = "False"
+    gcal["Private"] = "True"
+
+    return gcal
+
+
+def add_to_calendar():
+    pass

@@ -55,7 +55,3 @@ def extract_data(html: str) -> pd.DataFrame:
     ]  # type: ignore
 
     return df
-
-
-def extract_data_to_csv(html: str, filename: str) -> None:
-    extract_data(html).to_csv(f"data/extracted/{filename}.csv", index=False)
