@@ -1,9 +1,9 @@
 import pandas as pd
 
 
-def convert_to_google_calendar_csv(input_file: str, output_file: str) -> None:
+def convert_to_csv(input_file_path: str, output_file_path: str) -> None:
     # load data from csv file
-    df = pd.read_csv(input_file)
+    df = pd.read_csv(input_file_path)
 
     # create title of the event from form of class and subject
     df["Subject"] = df["Form Of Class"] + ": " + df["Subject"]
@@ -40,4 +40,4 @@ def convert_to_google_calendar_csv(input_file: str, output_file: str) -> None:
     df["All Day Event"] = "False"
 
     # save to csv file
-    df.to_csv(f"data/calendar/{output_file}", index=False)
+    df.to_csv(f"data/calendar/{output_file_path}", index=False)
